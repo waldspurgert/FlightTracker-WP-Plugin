@@ -33,11 +33,7 @@ add_action('admin_menu', 'flightaware_map_add_settings_page');
 
 // Callback function for rendering the settings page
 function flightaware_map_settings_page() {
-    ob_start(); // Start output buffering
-
     include plugin_dir_path(__FILE__) . 'templates/flightaware_map_settings_template.php';
-
-    echo ob_get_clean(); // Output the content
 }
 
 // Register settings and fields for the settings page
@@ -108,17 +104,17 @@ function flightaware_map_section_callback() {
 // Callback functions for the fields
 function flightaware_username_field_callback() {
     $options = get_option('flightaware_map_settings');
-    echo '<input type="text" name="flightaware_map_settings[flightaware_username]" value="' . esc_attr($options['flightaware_username'] ?? '') . '" />';
+    echo '<input type="text" name="flightaware_map_settings[flightaware_username]" value="' . esc_attr($options['flightaware_username'] ?? 'waldspurgert') . '" />';
 }
 
 function flightaware_api_key_field_callback() {
     $options = get_option('flightaware_map_settings');
-    echo '<input type="text" name="flightaware_map_settings[flightaware_api_key]" value="' . esc_attr($options['flightaware_api_key'] ?? '') . '" />';
+    echo '<input type="text" name="flightaware_map_settings[flightaware_api_key]" value="' . esc_attr($options['flightaware_api_key'] ?? 'cwICdVV8dCeS5gKqoUAOfWw25k169f2x') . '" />';
 }
 
 function google_maps_api_key_field_callback() {
     $options = get_option('flightaware_map_settings');
-    echo '<input type="text" name="flightaware_map_settings[google_maps_api_key]" value="' . esc_attr($options['google_maps_api_key'] ?? '') . '" />';
+    echo '<input type="text" name="flightaware_map_settings[google_maps_api_key]" value="' . esc_attr($options['google_maps_api_key'] ?? 'YOUR_GOOGLE_MAPS_API_KEY') . '" />';
 }
 
 // Callback function for the custom area section
@@ -139,42 +135,25 @@ function custom_track_area_lng_field_callback() {
 
 // Shortcode callback to display the map
 function flightaware_map_shortcode_callback() {
-    ob_start(); // Start output buffering
-
-    echo '<div id="flightaware-map" style="width: 100%; height: 500px;"></div>';
-
-    echo ob_get_clean(); // Output the content
+    ob_start();
+    include plugin_dir_path(__FILE__) . 'templates/flightaware_map_template.php';
+    return ob_get_clean();
 }
 add_shortcode('flightaware_map', 'flightaware_map_shortcode_callback');
 
 // Function to fetch data from the FlightAware API
 function flightaware_map_get_flight_data() {
     $options = get_option('flightaware_map_settings');
-    $username = $options['flightaware_username'] ?? '';
-    $api_key = $options['flightaware_api_key'] ?? '';
+    $username = $options['flightaware_username'] ?? 'waldspurgert';
+    $api_key = $options['flightaware_api_key'] ?? 'cwICdVV8dCeS5gKqoUAOfWw25k169f2x';
+    $custom_lat = $options['custom_track_area_lat'] ?? '';
+    $custom_lng = $options['custom_track_area_lng'] ?? '';
 
-    // If the API credentials are not provided, return empty data
-    if (empty($username) || empty($api_key)) {
-        return array();
-    }
-
-    // Construct the API URL
-    $api_url = "https://flightaware.com/api/v1/inFlightInfo?ident={$username}&howMany=10&offset=0";
-
-    // Set up cURL session
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $api_url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-        'Authorization: Basic ' . base64_encode("{$username}:{$api_key}"),
-    ));
-
-    // Execute the cURL session and get the API response
-    $response = curl_exec($ch);
-    curl_close($ch);
-
-    // Decode the JSON response
-    $flight_data = json_decode($response, true);
-
-    return $flight_data['flights'] ?? array();
+    // The rest of your API fetch function code...
 }
+
+// Deactivation hook
+function flightaware_map_deactivate() {
+    // Add any deactivation tasks here if needed
+}
+register_deactivation_hook(__FILE__, 'flightaware_map_deactivate');

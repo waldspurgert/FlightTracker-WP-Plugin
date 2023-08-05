@@ -3,7 +3,7 @@
  * Plugin Name: FlightAware Map Plugin
  * Description: A custom plugin to integrate FlightAware API and plot airplanes on a Google Map.
  * Version: 1.0
- * Author: Your Name
+ * Author: Trevor Waldspurger
  */
 
 // Enqueue scripts and styles

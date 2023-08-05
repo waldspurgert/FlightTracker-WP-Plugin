@@ -47,7 +47,7 @@ In case of any issues or errors, please check the following:
 
 ## Support
 
-For any questions, bug reports, or feature requests, please feel free to contact me at trevor@example.com.
+For any questions, bug reports, or feature requests, please feel free to contact me at admin@flykphl.com
 
 ## License
 

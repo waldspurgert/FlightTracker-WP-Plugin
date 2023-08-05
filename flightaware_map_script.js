@@ -1,76 +1,63 @@
-// flightaware_map_script.js
+// Your JavaScript code for initializing and customizing the Google Map goes here.
+// The code here should handle the rendering of the map and the display of airplane markers based on the data from the FlightAware API.
 
-(function ($) {
-    function initMap() {
-        var map = new google.maps.Map(document.getElementById('flightaware-map'), {
-            center: { lat: YOUR_CENTER_LATITUDE, lng: YOUR_CENTER_LONGITUDE },
-            zoom: 10,
-        });
+// Function to initialize the Google Map
+function initializeMap() {
+  const mapOptions = {
+    center: { lat: YOUR_INITIAL_LATITUDE, lng: YOUR_INITIAL_LONGITUDE }, // Set your initial map center coordinates here
+    zoom: 8, // Set the initial zoom level here
+  };
 
-        // Call the function to fetch the flight data from the server
-        fetchFlightData(map);
+  const map = new google.maps.Map(document.getElementById("flightaware-map"), mapOptions);
+
+  // Fetch flight data from the FlightAware API
+  fetchFlightData().then((data) => {
+    if (data) {
+      // Display airplane markers on the map
+      displayAirplaneMarkers(data, map);
+    } else {
+      alert("Error: Unable to fetch flight data from FlightAware API.");
     }
+  });
+}
 
-    function fetchFlightData(map) {
-        $.ajax({
-            url: 'https://aeroapi.flightaware.com/aeroapi/v3/your-endpoint-here',
-            method: 'GET',
-            dataType: 'json',
-            headers: {
-                'x-apikey': YOUR_FLIGHTAWARE_API_KEY,
-            },
-            success: function (data) {
-                // Process the flight data and plot the airplanes on the map or display in table format
-                if (data && data.flights && data.flights.length > 0) {
-                    if (YOUR_SHOW_TABLE_FORMAT === '1') {
-                        displayFlightsInTable(data.flights);
-                    } else {
-                        displayFlightsOnMap(data.flights, map);
-                    }
-                } else {
-                    console.error('No flight data found.');
-                }
-            },
-            error: function () {
-                console.error('Error fetching flight data from FlightAware API.');
-            },
-        });
-    }
+// Function to fetch flight data from the FlightAware API
+function fetchFlightData() {
+  return new Promise((resolve) => {
+    // Use WordPress REST API to get the data from the server
+    fetch(YOUR_API_ENDPOINT_URL)
+      .then((response) => response.json())
+      .then((data) => resolve(data))
+      .catch(() => resolve(false));
+  });
+}
 
-    function displayFlightsOnMap(flights, map) {
-        // Use the 'flights' data to plot airplanes on the map using Google Maps API
-        // For example:
-        // flights.forEach(function (flight) {
-        //     var marker = new google.maps.Marker({
-        //         position: { lat: flight.latitude, lng: flight.longitude },
-        //         map: map,
-        //         title: 'Flight ID: ' + flight.flight_id,
-        //     });
-        // });
-    }
+// Function to display airplane markers on the Google Map
+function displayAirplaneMarkers(data, map) {
+  // Process the data to extract the airplane coordinates
+  const airplaneCoordinates = data.map((flight) => ({
+    lat: parseFloat(flight.latitude),
+    lng: parseFloat(flight.longitude),
+  }));
 
-    function displayFlightsInTable(flights) {
-        // Use the 'flights' data to display airplanes in table format
-        // For example:
-        // var tableHtml = '<table>';
-        // tableHtml += '<thead><tr><th>Flight ID</th><th>Latitude</th><th>Longitude</th><th>Altitude</th></tr></thead>';
-        // tableHtml += '<tbody>';
-        // flights.forEach(function (flight) {
-        //     tableHtml += '<tr>';
-        //     tableHtml += '<td>' + flight.flight_id + '</td>';
-        //     tableHtml += '<td>' + flight.latitude + '</td>';
-        //     tableHtml += '<td>' + flight.longitude + '</td>';
-        //     tableHtml += '<td>' + flight.altitude + '</td>';
-        //     tableHtml += '</tr>';
-        // });
-        // tableHtml += '</tbody>';
-        // tableHtml += '</table>';
+  // Create a marker for each airplane and add it to the map
+  airplaneCoordinates.forEach((coordinate) => {
+    const marker = new google.maps.Marker({
+      position: coordinate,
+      map: map,
+      // Customize the marker icon as needed
+      // icon: 'path/to/marker-icon.png',
+    });
+  });
+}
 
-        // Display the 'tableHtml' on the page or append it to a specific element
-        // For example:
-        // $('#table-container').html(tableHtml);
-    }
+// Callback function to load the Google Map
+function loadMapScript() {
+  const googleMapScript = document.createElement("script");
+  googleMapScript.src = "https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY";
+  googleMapScript.onload = initializeMap;
+  document.head.appendChild(googleMapScript);
+}
 
-    // Call the initMap function when the page is loaded
-    google.maps.event.addDomListener(window, 'load', initMap);
-})(jQuery);
+// Load the Google Map script
+loadMapScript();

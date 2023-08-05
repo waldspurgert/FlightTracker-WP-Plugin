@@ -1,60 +1,50 @@
 # FlightAware Map Plugin
 
-**Author:** Trevor Waldspurger
-**Version:** 1.0
-
-## Description
-
-FlightAware Map Plugin is a custom WordPress plugin that integrates with the FlightAware API to display real-time airplane data on a Google Map. The plugin allows users to track airplanes based on their FlightAware username and API key, and it supports customization of the area to track planes.
+A custom WordPress plugin to integrate the FlightAware API and plot airplanes on a Google Map or display them in a table format.
 
 ## Installation
 
-1. Download the plugin as a ZIP file from the [GitHub repository](https://github.com/trevorwaldspurger/flightaware-map-plugin).
-
-2. In your WordPress admin panel, navigate to "Plugins" > "Add New."
-
-3. Click on the "Upload Plugin" button and select the downloaded ZIP file.
-
-4. Click "Install Now" and then "Activate" the plugin.
-
-5. After activation, navigate to "FlightAware Map" in the WordPress admin sidebar to configure the plugin settings.
+1. Download the plugin ZIP file from the GitHub repository.
+2. Go to your WordPress admin dashboard.
+3. Navigate to Plugins > Add New > Upload Plugin.
+4. Choose the ZIP file you downloaded and click Install Now.
+5. Activate the plugin from the Plugins page.
 
 ## Configuration
 
-1. Go to "FlightAware Map" in the WordPress admin sidebar.
+1. After activating the plugin, go to Settings > FlightAware Map Settings to configure the plugin.
+2. Enter your FlightAware API Key and Google Maps API Key in the provided fields.
+3. Optionally, you can customize the area to track planes by entering the latitude and longitude coordinates.
+4. Enable the "Show Planes in Table Format" option to display the flight data in a table format.
 
-2. Enter your FlightAware API credentials and Google Maps API key.
+## Shortcodes
 
-3. Optionally, customize the latitude and longitude coordinates for the area you want to track planes.
+- Use `[flightaware_map]` shortcode to display the airplanes on a Google Map. The map will be centered at the specified latitude and longitude coordinates.
+- Use `[flightaware_map format="table"]` shortcode to display the airplanes in a table format. The table will contain Flight ID, Latitude, Longitude, and Altitude of each plane.
 
-4. Save the settings.
+## JavaScript Customization
 
-## Usage
+To customize the JavaScript behavior in the `flightaware_map_script.js` file, update the following variables:
 
-To display the FlightAware Map on a page or post, use the `[flightaware_map]` shortcode. The map will automatically show airplanes based on the configured area and your FlightAware username.
+- `YOUR_FLIGHTAWARE_API_KEY`: Replace with your FlightAware API Key fetched from the plugin settings.
+- `YOUR_CENTER_LATITUDE`: Replace with the latitude coordinate for centering the map.
+- `YOUR_CENTER_LONGITUDE`: Replace with the longitude coordinate for centering the map.
+- `YOUR_SHOW_TABLE_FORMAT`: Replace with the value of the "Show Planes in Table Format" option from the plugin settings.
 
-Example shortcode: [flightaware_map]
+## Deactivation
+
+Deactivating the plugin will disable the flight tracking functionality and remove all the shortcodes from your WordPress site.
 
 ## Troubleshooting
 
-In case of any issues or errors, please check the following:
+If you encounter any issues with the plugin, please check the following:
 
-1. Ensure that the FlightAware API credentials and Google Maps API key are entered correctly in the settings.
+1. Make sure you have entered valid API keys for both FlightAware and Google Maps in the plugin settings.
+2. Verify that the coordinates for the custom area to track planes are correct.
+3. Check for any JavaScript errors in the browser console.
 
-2. Check that the FlightAware username and API key are valid and active.
-
-3. Verify that the custom area's latitude and longitude values are within the correct range.
-
-## Support
-
-For any questions, bug reports, or feature requests, please feel free to contact me at admin@flykphl.com
+For any additional assistance or questions, feel free to reach out to the plugin author: Trevor Waldspurger.
 
 ## License
 
-This plugin is released under the [GNU General Public License](https://www.gnu.org/licenses/gpl-3.0.en.html). You are free to modify and distribute the plugin as per the terms of the license.
-
-## Credits
-
-FlightAware Map Plugin is developed and maintained by Trevor Waldspurger.
-
-Special thanks to the WordPress community for their support and resources.
+This plugin is released under the [MIT License](https://opensource.org/licenses/MIT).

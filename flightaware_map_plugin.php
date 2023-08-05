@@ -126,18 +126,21 @@ function flightaware_map_section_callback() {
 
 // Callback functions for the fields
 function flightaware_username_field_callback() {
-    $options = get_option('flightaware_map_settings', array());
-    echo '<input type="text" name="flightaware_map_settings[flightaware_username]" value="' . esc_attr($options['flightaware_username'] ?? 'waldspurgert') . '" />';
+    $options = get_option('flightaware_map_settings');
+    $username = isset($options['flightaware_username']) ? $options['flightaware_username'] : 'waldspurgert';
+    echo '<input type="text" name="flightaware_map_settings[flightaware_username]" value="' . esc_attr($username) . '" />';
 }
 
 function flightaware_api_key_field_callback() {
-    $options = get_option('flightaware_map_settings', array());
-    echo '<input type="text" name="flightaware_map_settings[flightaware_api_key]" value="' . esc_attr($options['flightaware_api_key'] ?? 'cwICdVV8dCeS5gKqoUAOfWw25k169f2x') . '" />';
+    $options = get_option('flightaware_map_settings');
+    $api_key = isset($options['flightaware_api_key']) ? $options['flightaware_api_key'] : 'cwICdVV8dCeS5gKqoUAOfWw25k169f2x';
+    echo '<input type="text" name="flightaware_map_settings[flightaware_api_key]" value="' . esc_attr($api_key) . '" />';
 }
 
 function google_maps_api_key_field_callback() {
-    $options = get_option('flightaware_map_settings', array());
-    echo '<input type="text" name="flightaware_map_settings[google_maps_api_key]" value="' . esc_attr($options['google_maps_api_key'] ?? 'YOUR_GOOGLE_MAPS_API_KEY') . '" />';
+    $options = get_option('flightaware_map_settings');
+    $google_maps_api_key = isset($options['google_maps_api_key']) ? $options['google_maps_api_key'] : 'YOUR_GOOGLE_MAPS_API_KEY';
+    echo '<input type="text" name="flightaware_map_settings[google_maps_api_key]" value="' . esc_attr($google_maps_api_key) . '" />';
 }
 
 // Callback function for the custom area section

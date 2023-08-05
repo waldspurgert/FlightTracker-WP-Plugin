@@ -126,17 +126,17 @@ function flightaware_map_section_callback() {
 
 // Callback functions for the fields
 function flightaware_username_field_callback() {
-    $options = get_option('flightaware_map_settings');
+    $options = get_option('flightaware_map_settings', array());
     echo '<input type="text" name="flightaware_map_settings[flightaware_username]" value="' . esc_attr($options['flightaware_username'] ?? 'waldspurgert') . '" />';
 }
 
 function flightaware_api_key_field_callback() {
-    $options = get_option('flightaware_map_settings');
+    $options = get_option('flightaware_map_settings', array());
     echo '<input type="text" name="flightaware_map_settings[flightaware_api_key]" value="' . esc_attr($options['flightaware_api_key'] ?? 'cwICdVV8dCeS5gKqoUAOfWw25k169f2x') . '" />';
 }
 
 function google_maps_api_key_field_callback() {
-    $options = get_option('flightaware_map_settings');
+    $options = get_option('flightaware_map_settings', array());
     echo '<input type="text" name="flightaware_map_settings[google_maps_api_key]" value="' . esc_attr($options['google_maps_api_key'] ?? 'YOUR_GOOGLE_MAPS_API_KEY') . '" />';
 }
 

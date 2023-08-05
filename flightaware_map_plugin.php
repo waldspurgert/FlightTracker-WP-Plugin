@@ -60,14 +60,6 @@ function flightaware_map_settings_init() {
     );
 
     add_settings_field(
-        'flightaware_username',
-        'FlightAware Username',
-        'flightaware_username_field_callback',
-        'flightaware-map-settings',
-        'flightaware_map_section'
-    );
-
-    add_settings_field(
         'flightaware_api_key',
         'FlightAware API Key',
         'flightaware_api_key_field_callback',
@@ -110,16 +102,10 @@ add_action('admin_init', 'flightaware_map_settings_init');
 
 // Callback function for the section
 function flightaware_map_section_callback() {
-    echo '<p>Enter your FlightAware API credentials and Google Maps API Key below:</p>';
+    echo '<p>Enter your FlightAware API key and Google Maps API Key below:</p>';
 }
 
 // Callback functions for the fields
-function flightaware_username_field_callback() {
-    $options = get_option('flightaware_map_settings');
-    $username = isset($options['flightaware_username']) ? $options['flightaware_username'] : 'waldspurgert';
-    echo '<input type="text" name="flightaware_map_settings[flightaware_username]" value="' . esc_attr($username) . '" />';
-}
-
 function flightaware_api_key_field_callback() {
     $options = get_option('flightaware_map_settings');
     $api_key = isset($options['flightaware_api_key']) ? $options['flightaware_api_key'] : 'cwICdVV8dCeS5gKqoUAOfWw25k169f2x';
@@ -166,14 +152,20 @@ add_shortcode('flightaware_map', 'flightaware_map_shortcode_callback');
 // Function to fetch data from the FlightAware API
 function flightaware_map_get_flight_data() {
     $options = get_option('flightaware_map_settings');
-    $username = isset($options['flightaware_username']) ? $options['flightaware_username'] : 'waldspurgert';
     $api_key = isset($options['flightaware_api_key']) ? $options['flightaware_api_key'] : 'cwICdVV8dCeS5gKqoUAOfWw25k169f2x';
 
-    // Customize the URL based on your specific FlightAware API endpoint and query parameters
-    $api_url = "https://your-flightaware-api-endpoint.com/api/endpoint?username={$username}&api_key={$api_key}&other_parameters=...";
+    // Customize the URL based on the FlightAware API endpoint and query parameters
+    $api_url = 'https://aeroapi.flightaware.com/aeroapi/endpoint?other_parameters=...';
+
+    // Set up the request arguments
+    $request_args = array(
+        'headers' => array(
+            'x-apikey' => $api_key,
+        ),
+    );
 
     // Make the HTTP request to the FlightAware API
-    $response = wp_remote_get($api_url);
+    $response = wp_remote_get($api_url, $request_args);
 
     // Check if the request was successful
     if (is_wp_error($response) || wp_remote_retrieve_response_code($response) !== 200) {

@@ -6,6 +6,9 @@
  * Author: Trevor Waldspurger
  */
 
+// Start output buffering to prevent premature header sending
+ob_start();
+
 // Enqueue scripts and styles
 function flightaware_map_enqueue_scripts() {
     $google_maps_api_key = get_option('flightaware_map_settings')['google_maps_api_key'];

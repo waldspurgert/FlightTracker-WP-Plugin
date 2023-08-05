@@ -31,6 +31,8 @@ To customize the JavaScript behavior in the `flightaware_map_script.js` file, up
 - `YOUR_CENTER_LONGITUDE`: Replace with the longitude coordinate for centering the map.
 - `YOUR_SHOW_TABLE_FORMAT`: Replace with the value of the "Show Planes in Table Format" option from the plugin settings.
 
+Please ensure that the data from the settings page is correctly updated in these JavaScript variables before the script is executed. This way, you can use the data supplied on the settings page to customize the behavior of the script accordingly.
+
 ## Deactivation
 
 Deactivating the plugin will disable the flight tracking functionality and remove all the shortcodes from your WordPress site.

@@ -207,7 +207,7 @@ function flightaware_map_get_flight_data() {
     // Customize the URL based on the FlightAware API endpoint and query parameters
     $custom_track_area_lat = isset($options['custom_track_area_lat']) ? $options['custom_track_area_lat'] : '';
     $custom_track_area_lng = isset($options['custom_track_area_lng']) ? $options['custom_track_area_lng'] : '';
-    $api_url = 'https://aeroapi.flightaware.com/aeroapi/v3/your-endpoint-here?lat=' . $custom_track_area_lat . '&lng=' . $custom_track_area_lng;
+    $api_url = 'https://aeroapi.flightaware.com/aeroapi/v3/?lat=' . $custom_track_area_lat . '&lng=' . $custom_track_area_lng;
 
     // Set up the request arguments
     $request_args = array(
